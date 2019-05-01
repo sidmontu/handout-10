@@ -2,17 +2,19 @@ library(ggplot2)
 library(ggthemes)
 library(reshape2)
 
-data <- read.csv("rmq_naive.csv",header=F,sep=",")
+data <- read.csv("rmq_simple.csv",header=F,sep=",")
 
-pt <- data$V1[1:98]
-qt <- data$V1[99:196]
+total <- nrow(data)
+
+pt <- data$V1[1:(total/2)]
+qt <- data$V1[((total/2)+1):total]
 
 df <- data.frame(pt=pt,qt=qt)
 df$n <- seq(2,nrow(df)+1)
 
 df <- melt(df,id.vars=c("n"))
 
-pdf("rmq_naive.pdf",width=7,height=4)
+pdf("rmq_simple.pdf",width=7,height=4)
 ggplot(df,aes(x=n,y=value,color=variable)) +
     geom_point() +
     geom_line() +
